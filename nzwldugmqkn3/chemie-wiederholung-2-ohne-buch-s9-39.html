@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chemie – Wiederholung 2 ohne Buch S. 9–39</title>
+  <style>
+    :root { --tinte: #17212b; --blau: #075985; --blau-hell: #e0f2fe; --rand: #cbd5e1; --papier: #f8fafc; --gut: #166534; --gut-hell: #dcfce7; --fehler: #b91c1c; --fehler-hell: #fee2e2; --warn: #92400e; --warn-hell: #fef3c7; }
+    * { box-sizing: border-box; }
+    body { background: #e2e8f0; color: var(--tinte); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; }
+    main { background: white; margin: 2rem auto; max-width: 56rem; padding: 2.5rem; }
+    h1, h2, h3 { line-height: 1.2; } h1 { margin: 0; } h2 { border-bottom: 2px solid var(--blau); margin-top: 2.5rem; padding-bottom: .35rem; }
+    .meta, .hinweis, .resultat { background: var(--blau-hell); border-left: .35rem solid var(--blau); padding: 1rem; }
+    .meta { display: grid; gap: .75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 1.5rem 0; }
+    label { display: block; font-weight: 650; }
+    input[type="text"], input[type="number"], input[type="password"], select, textarea { border: 1px solid #64748b; border-radius: .25rem; font: inherit; margin-top: .25rem; max-width: 18rem; padding: .45rem; width: 100%; background: white; color: inherit; }
+    textarea { max-width: none; font-family: ui-monospace, Consolas, monospace; font-size: .8rem; min-height: 7rem; word-break: break-all; }
+    fieldset { border: 1px solid var(--rand); margin: 1.25rem 0; padding: 1rem; }
+    legend { font-weight: 700; padding: 0 .35rem; } .punkte { color: #475569; font-size: .9rem; font-weight: 400; }
+    .antworten { display: grid; gap: .45rem; } .antworten label { font-weight: 400; }
+    .teil-frage { margin: .8rem 0; } .teil-frage input, .teil-frage select { display: block; }
+    button { background: var(--blau); border: 0; border-radius: .25rem; color: white; cursor: pointer; font: inherit; font-weight: 700; margin: .5rem .5rem .5rem 0; padding: .7rem 1rem; }
+    button:hover { background: #0c4a6e; } button.secondary { background: #475569; } button.secondary:hover { background: #334155; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .tabelle { border-collapse: collapse; margin: .75rem 0; } .tabelle th, .tabelle td { border: 1px solid var(--rand); padding: .35rem .7rem; text-align: center; }
+    .auswertung { border-collapse: collapse; margin-top: 1rem; width: 100%; } .auswertung th, .auswertung td { border: 1px solid var(--rand); padding: .5rem; text-align: left; vertical-align: top; }
+    .korrektur { display: none; margin-top: .75rem; background: var(--papier); border-left: .25rem solid var(--blau); padding: .5rem .75rem; } .korrektur.sichtbar { display: block; }
+    .richtig { border-color: var(--gut); border-width: 2px; } .falsch { border-color: var(--fehler); border-width: 2px; } .teilweise { border-color: var(--warn); border-width: 2px; }
+    .feld-richtig { outline: 2px solid var(--gut); } .feld-falsch { outline: 2px solid var(--fehler); }
+    label.gewaehlt-falsch { color: var(--fehler); text-decoration: line-through; }
+    .bewertung { font-weight: 700; margin-top: .5rem; } .richtig .bewertung { color: var(--gut); } .falsch .bewertung { color: var(--fehler); } .teilweise .bewertung { color: var(--warn); }
+    #uhr { position: sticky; top: 0; z-index: 5; background: var(--blau); color: white; font-weight: 700; padding: .5rem 1rem; margin: 1rem -2.5rem 0; display: none; justify-content: space-between; }
+    #uhr.sichtbar { display: flex; } #uhr.abgelaufen { background: var(--fehler); }
+    .start-box { background: var(--papier); border: 1px solid var(--rand); padding: 1.25rem; margin: 1.5rem 0; }
+    .versteckt { display: none !important; }
+    .warnung { background: var(--fehler-hell); border-left: .35rem solid var(--fehler); padding: 1rem; margin-bottom: 1.5rem; }
+    .bestaetigung { background: var(--warn-hell); border-left: .35rem solid var(--warn); padding: 1rem; margin-top: 1rem; }
+    .abgabe { background: var(--gut-hell); border-left: .35rem solid var(--gut); padding: 1rem; margin-top: 1.5rem; }
+    .lehrer { background: var(--papier); border: 1px solid var(--rand); margin-top: 3rem; padding: 1rem 1.25rem; }
+    .lehrer summary { cursor: pointer; font-weight: 700; }
+    .fehlertext { color: var(--fehler); font-weight: 650; min-height: 1.5rem; margin: .5rem 0 0; }
+    .ok-text { color: var(--gut); font-weight: 650; }
+    .note { font-size: 1.4rem; }
+    @media (max-width: 38rem) { body { background: white; } main { margin: 0; padding: 1rem; } #uhr { margin: 1rem -1rem 0; } .meta { grid-template-columns: 1fr; } }
+    @media print { body { background: white; } main { margin: 0; max-width: none; padding: 0; } button, #uhr, .lehrer, .start-box, .warnung, .bestaetigung { display: none !important; } fieldset { break-inside: avoid; } }
+      .situation { background: #fef9c3; border-left: .35rem solid #ca8a04; padding: .9rem 1rem; margin: 1rem 0; }
+    textarea.frei-antwort { font-family: inherit; font-size: 1rem; word-break: normal; min-height: 6rem; width: 100%; max-width: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="js-warnung" class="warnung">
+      <strong>Achtung: Der Test kann so nicht gestartet werden.</strong><br>
+      Die Datei wird gerade nur als Vorschau angezeigt (z. B. in WhatsApp, Mail oder der Dateien-App). In der Vorschau funktionieren die Knöpfe nicht.<br>
+      <strong>Lösung:</strong> Öffne den Test über einen Link in <strong>Safari</strong> (iPad/iPhone) oder öffne die Datei auf einem Computer in Chrome, Edge, Firefox oder Safari.
+      <span id="js-fehler"></span>
+    </div>
+    <script>
+      document.getElementById('js-warnung').style.display = 'none';
+      window.onerror = function (msg) { var w = document.getElementById('js-warnung'); if (w) { w.style.display = 'block'; document.getElementById('js-fehler').innerHTML = '<br><small>Technischer Fehler: ' + String(msg).replace(/</g, '&lt;') + '</small>'; } };
+    </script>
+    <h1>Chemie: Wiederholungstest 2 ohne Buch (Seiten 9–39)</h1>
+    <p>Chemie Seite 9–39, Schwerpunkt: was beim letzten Mal schwer war · Bearbeitungszeit: höchstens 45 Minuten · Teil A und B: 30 Punkte · Teil C (wie in der IHK-Prüfung): 10 Punkte</p>
+    <div class="hinweis"><strong>Wie in der echten Prüfung:</strong> <strong>ohne Buch</strong> und ohne Notizen. Ein Taschenrechner ist erlaubt (nicht das Handy).<br><strong>Keine Sorge:</strong> Das ist eine Standortbestimmung. Fehler zeigen uns nur, was wir wiederholen. <br><strong>Achtung:</strong> <strong>Lass nichts leer</strong> – ein Versuch kostet nichts. Klicke am Ende auf „Test abgeben“.</div>
+
+    <div class="meta">
+      <label>Name <input type="text" id="name" autocomplete="name"></label>
+      <label>Datum <input type="text" id="datum" inputmode="numeric" placeholder="TT.MM.JJJJ"></label>
+    </div>
+
+    <div id="start-box" class="start-box">
+      <p><strong>Bereit?</strong> Sobald du auf „Test starten“ klickst, beginnt die Bearbeitungszeit von 45 Minuten. Die verbleibende Zeit wird oben angezeigt. Deine Antworten werden automatisch in diesem Browser zwischengespeichert.</p>
+      <button type="button" id="start">Test starten</button>
+    </div>
+
+    <div id="uhr" role="timer" aria-live="off"><span id="uhr-text">Verbleibende Zeit: 45:00</span><span id="uhr-info"></span></div>
+
+    <form id="test" class="versteckt" autocomplete="off">
+      <h2>Teil A – Ankreuzen <span class="punkte">10 Punkte</span></h2>
+      <p>Pro Aufgabe ist <strong>genau eine</strong> Antwort richtig.</p>
+      <fieldset data-id="1"><legend>1. Welches Element ist ein Edelgas? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q1" value="a"> Natrium</label>
+        <label><input type="radio" name="q1" value="b"> Neon</label>
+        <label><input type="radio" name="q1" value="c"> Magnesium</label>
+        <label><input type="radio" name="q1" value="d"> Schwefel</label>
+      </div></fieldset>
+      <fieldset data-id="2"><legend>2. Eisen hat die Dichte 7,9 kg/dm³. Was ist Eisen? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q2" value="a"> ein Leichtmetall</label>
+        <label><input type="radio" name="q2" value="b"> ein Schwermetall</label>
+        <label><input type="radio" name="q2" value="c"> ein Halbmetall</label>
+        <label><input type="radio" name="q2" value="d"> ein Edelgas</label>
+      </div></fieldset>
+      <fieldset data-id="3"><legend>3. Was ist Stickstoff N₂? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q3" value="a"> ein Gemisch</label>
+        <label><input type="radio" name="q3" value="b"> eine Verbindung</label>
+        <label><input type="radio" name="q3" value="c"> ein Element</label>
+        <label><input type="radio" name="q3" value="d"> ein Salz</label>
+      </div></fieldset>
+      <fieldset data-id="4"><legend>4. Welches Ion bildet Magnesium (2. Hauptgruppe)? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q4" value="a"> Mg⁺</label>
+        <label><input type="radio" name="q4" value="b"> Mg²⁺</label>
+        <label><input type="radio" name="q4" value="c"> Mg⁻</label>
+        <label><input type="radio" name="q4" value="d"> Mg²⁻</label>
+      </div></fieldset>
+      <fieldset data-id="5"><legend>5. Welches Ion bildet Sauerstoff (6. Hauptgruppe)? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q5" value="a"> O⁺</label>
+        <label><input type="radio" name="q5" value="b"> O²⁺</label>
+        <label><input type="radio" name="q5" value="c"> O⁻</label>
+        <label><input type="radio" name="q5" value="d"> O²⁻</label>
+      </div></fieldset>
+      <fieldset data-id="6"><legend>6. Welches Ion ist typisch für eine <em>Säure</em>? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q6" value="a"> OH⁻</label>
+        <label><input type="radio" name="q6" value="b"> H⁺</label>
+        <label><input type="radio" name="q6" value="c"> Na⁺</label>
+        <label><input type="radio" name="q6" value="d"> Cl⁻</label>
+      </div></fieldset>
+      <fieldset data-id="7"><legend>7. Wie heißt das typische Ion einer <em>Lauge</em>? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q7" value="a"> Hydroxidion OH⁻</label>
+        <label><input type="radio" name="q7" value="b"> Wasserstoffion H⁺</label>
+        <label><input type="radio" name="q7" value="c"> Oxidion O²⁻</label>
+        <label><input type="radio" name="q7" value="d"> Chloridion Cl⁻</label>
+      </div></fieldset>
+      <fieldset data-id="8"><legend>8. Bei einer chemischen Reaktion wird Energie <em>frei</em>. Wie heißt diese Reaktion? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q8" value="a"> endotherm</label>
+        <label><input type="radio" name="q8" value="b"> exotherm</label>
+        <label><input type="radio" name="q8" value="c"> neutral</label>
+        <label><input type="radio" name="q8" value="d"> Reduktion</label>
+      </div></fieldset>
+      <fieldset data-id="9"><legend>9. Welche Maßnahme ist <em>passiver</em> Korrosionsschutz? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q9" value="a"> eine Opferanode einbauen</label>
+        <label><input type="radio" name="q9" value="b"> Fremdstrom anlegen</label>
+        <label><input type="radio" name="q9" value="c"> das Bauteil lackieren</label>
+        <label><input type="radio" name="q9" value="d"> das Bauteil zur Kathode machen</label>
+      </div></fieldset>
+      <fieldset data-id="10"><legend>10. Zink und Kupfer berühren sich in feuchter Luft. Welches Metall korrodiert? <span class="punkte">1 Punkt</span></legend><div class="antworten">
+        <label><input type="radio" name="q10" value="a"> Kupfer</label>
+        <label><input type="radio" name="q10" value="b"> Zink</label>
+        <label><input type="radio" name="q10" value="c"> beide gleich stark</label>
+        <label><input type="radio" name="q10" value="d"> keines</label>
+      </div></fieldset>
+
+      <h2>Teil B – Zuordnen und rechnen <span class="punkte">20 Punkte</span></h2>
+      <fieldset data-id="11"><legend>11. Element, Verbindung oder Gemisch? <span class="punkte">3 Punkte</span></legend>
+        <div class="teil-frage"><label>a) Luft <select name="q11a"><option value="">– bitte wählen –</option><option value="element">Element</option><option value="verbindung">Verbindung</option><option value="gemisch">Gemisch</option></select></label></div>
+        <div class="teil-frage"><label>b) Kohlendioxid CO₂ <select name="q11b"><option value="">– bitte wählen –</option><option value="element">Element</option><option value="verbindung">Verbindung</option><option value="gemisch">Gemisch</option></select></label></div>
+        <div class="teil-frage"><label>c) Wasserstoff H₂ <select name="q11c"><option value="">– bitte wählen –</option><option value="element">Element</option><option value="verbindung">Verbindung</option><option value="gemisch">Gemisch</option></select></label></div>
+      </fieldset>
+      <fieldset data-id="12"><legend>12. Elektronenschalen <span class="punkte">3 Punkte</span></legend>
+        <p>Auf die n-te Schale passen höchstens 2 · n² Elektronen. Tipp: erst die Hochzahl ausrechnen, dann mal 2.</p>
+        <div class="teil-frage"><label>a) K-Schale (n = 1): höchstens wie viele Elektronen? <input type="text" name="q12a"></label></div>
+        <div class="teil-frage"><label>b) M-Schale (n = 3): höchstens wie viele Elektronen? <input type="text" name="q12b"></label></div>
+        <div class="teil-frage"><label>c) N-Schale (n = 4): höchstens wie viele Elektronen? <input type="text" name="q12c"></label></div>
+      </fieldset>
+      <fieldset data-id="13"><legend>13. Aluminium <span class="punkte">3 Punkte</span></legend>
+        <p>Aluminium hat die Ordnungszahl 13 und steht in der 3. Hauptgruppe.</p>
+        <div class="teil-frage"><label>a) Wie viele Elektronen hat ein Aluminiumatom? <input type="text" name="q13a"></label></div>
+        <div class="teil-frage"><label>b) Wie viele Außenelektronen (Valenzelektronen) hat es? <input type="text" name="q13b"></label></div>
+        <div class="teil-frage"><label>c) Welches Ion bildet Aluminium? <select name="q13c"><option value="">– bitte wählen –</option><option value="al+">Al⁺</option><option value="al2+">Al²⁺</option><option value="al3+">Al³⁺</option><option value="al3-">Al³⁻</option></select></label></div>
+      </fieldset>
+      <fieldset data-id="14"><legend>14. Formeln von Salzen <span class="punkte">3 Punkte</span></legend>
+        <p>Natrium: 1. Hauptgruppe · Calcium: 2. Hauptgruppe · Aluminium: 3. Hauptgruppe · Sauerstoff: 6. Hauptgruppe · Chlor: 7. Hauptgruppe</p>
+        <div class="teil-frage"><label>a) Calciumchlorid: <select name="q14a"><option value="">– bitte wählen –</option><option value="cacl">CaCl</option><option value="cacl2">CaCl₂</option><option value="ca2cl">Ca₂Cl</option><option value="cacl3">CaCl₃</option></select></label></div>
+        <div class="teil-frage"><label>b) Natriumoxid: <select name="q14b"><option value="">– bitte wählen –</option><option value="nao">NaO</option><option value="nao2">NaO₂</option><option value="na2o">Na₂O</option><option value="na2o3">Na₂O₃</option></select></label></div>
+        <div class="teil-frage"><label>c) Aluminiumoxid: <select name="q14c"><option value="">– bitte wählen –</option><option value="alo">AlO</option><option value="al2o3">Al₂O₃</option><option value="al3o2">Al₃O₂</option><option value="alo3">AlO₃</option></select></label></div>
+      </fieldset>
+      <fieldset data-id="15"><legend>15. Molekülmasse <span class="punkte">2 Punkte</span></legend>
+        <p>Atommassen: H = 1 · N = 14 · O = 16 · Cl = 35,5 — erst ausschreiben, dann rechnen!</p>
+        <div class="teil-frage"><label>a) Salzsäure HCl: M<sub>r</sub> = <input type="text" name="q15a"></label></div>
+        <div class="teil-frage"><label>b) Salpetersäure HNO₃: M<sub>r</sub> = <input type="text" name="q15b"></label></div>
+      </fieldset>
+      <fieldset data-id="16"><legend>16. Spannungsreihe <span class="punkte">3 Punkte</span></legend>
+        <p>Normalpotenziale: Magnesium −2,4 V · Zink −0,76 V · Eisen −0,44 V · Kupfer +0,34 V</p>
+        <div class="teil-frage"><label>a) Spannung zwischen Zink und Kupfer (in V)? <input type="text" name="q16a"></label></div>
+        <div class="teil-frage"><label>b) Spannung zwischen Magnesium und Eisen (in V)? <input type="text" name="q16b"></label></div>
+        <div class="teil-frage"><label>c) Magnesium und Eisen berühren sich: Welches Metall korrodiert? <select name="q16c"><option value="">– bitte wählen –</option><option value="magnesium">Magnesium</option><option value="eisen">Eisen</option></select></label></div>
+      </fieldset>
+      <fieldset data-id="17"><legend>17. Säuren und Basen <span class="punkte">3 Punkte</span></legend>
+        <div class="teil-frage"><label>a) HCl → H⁺ + … <select name="q17a"><option value="">– bitte wählen –</option><option value="cl-">Cl⁻</option><option value="oh-">OH⁻</option><option value="cl+">Cl⁺</option><option value="h-">H⁻</option></select></label></div>
+        <div class="teil-frage"><label>b) Kohlensäure H₂CO₃ → ? H⁺ + CO₃²⁻: Wie viele H⁺-Ionen entstehen aus einem Molekül? <input type="text" name="q17b"></label></div>
+        <div class="teil-frage"><label>c) Calciumhydroxid Ca(OH)₂ → Ca²⁺ + ? OH⁻: Wie viele OH⁻-Ionen entstehen? <input type="text" name="q17c"></label></div>
+      </fieldset>
+
+      <h2>Teil C – Aufgabe wie in der IHK-Prüfung <span class="punkte">10 Punkte</span></h2>
+      <div class="situation"><strong>Situation:</strong> Sie sind Logistikmeister in einem Lager für Industriebedarf. Im Batterieladeraum werden die Elektrostapler über Nacht geladen; dabei entsteht Wasserstoff H₂. Wasserstoff ist in Luft zwischen 4 % und 77 % zündfähig. Im Gefahrstofflager stehen Kanister mit Salzsäure HCl und mit Kalilauge KOH. Atommassen: Na = 23 · O = 16 · H = 1.</div>
+      <p>Bei „Erklären“ und „Begründen“: in <strong>ganzen Sätzen</strong>, bei „Nennen“ reicht eine Liste. Bei Rechnungen: Rechenweg aufschreiben. <strong>Lass nichts leer</strong> – ein Ansatz bringt schon Punkte.</p>
+      <fieldset class="frei" data-frei="a"><legend>a <span class="punkte">3 Punkte</span></legend>
+        <p>Wasserstoff verbrennt mit Sauerstoff: 2 H₂ + O₂ → 2 H₂O + Energie. <strong>Nennen</strong> Sie, ob diese Reaktion exotherm oder endotherm ist, und <strong>erklären</strong> Sie, warum der Ladebereich gelüftet werden muss und dort Funken und offenes Feuer verboten sind.</p>
+        <textarea class="frei-antwort" name="ca" rows="5" placeholder="Deine Antwort in ganzen Sätzen bzw. mit Rechenweg"></textarea>
+      </fieldset>
+      <fieldset class="frei" data-frei="b"><legend>b <span class="punkte">2 Punkte</span></legend>
+        <p>Für die Reinigung wird auch Natronlauge NaOH verwendet. <strong>Berechnen</strong> Sie die Molekülmasse von NaOH. Schreiben Sie den Rechenweg auf.</p>
+        <textarea class="frei-antwort" name="cb" rows="5" placeholder="Deine Antwort in ganzen Sätzen bzw. mit Rechenweg"></textarea>
+      </fieldset>
+      <fieldset class="frei" data-frei="c"><legend>c <span class="punkte">3 Punkte</span></legend>
+        <p>Ein Kanister Salzsäure ist undicht und läuft auf einen Kanister Kalilauge. <strong>Erklären</strong> Sie, was passiert, wenn Säure und Lauge zusammenkommen (Name der Reaktion, welche Ionen reagieren, was dabei frei wird), und <strong>begründen</strong> Sie damit, warum beide getrennt gelagert werden.</p>
+        <textarea class="frei-antwort" name="cc" rows="5" placeholder="Deine Antwort in ganzen Sätzen bzw. mit Rechenweg"></textarea>
+      </fieldset>
+      <fieldset class="frei" data-frei="d"><legend>d <span class="punkte">2 Punkte</span></legend>
+        <p>Der Gefahrstoffschrank ist aus Stahlblech und soll vor Korrosion geschützt werden. <strong>Nennen</strong> Sie zwei <em>passive</em> Maßnahmen zum Korrosionsschutz.</p>
+        <textarea class="frei-antwort" name="cd" rows="5" placeholder="Deine Antwort in ganzen Sätzen bzw. mit Rechenweg"></textarea>
+      </fieldset>
+
+      <div class="start-box">
+        <p><strong>Fertig?</strong> Prüfe noch einmal alle Aufgaben und klicke dann auf „Test abgeben“.</p>
+        <button type="submit" id="abgeben">Test abgeben</button><button class="secondary" type="button" id="neu">Alles löschen und neu beginnen</button>
+        <div id="abgabe-frage" class="bestaetigung versteckt"><p id="abgabe-frage-text" style="margin-top:0"></p><button type="button" id="abgabe-ja">Ja, abgeben</button><button type="button" class="secondary" id="abgabe-nein">Zurück zum Test</button></div>
+        <div id="neu-frage" class="bestaetigung versteckt"><p style="margin-top:0">Wirklich alle Antworten löschen und die Zeit neu starten?</p><button type="button" id="neu-ja">Ja, alles löschen</button><button type="button" class="secondary" id="neu-nein">Abbrechen</button></div>
+      </div>
+    </form>
+
+    <section id="abgabe" class="abgabe versteckt" aria-live="polite" tabindex="-1">
+      <h2 style="margin-top:0">Test abgegeben ✓</h2>
+      <p id="abgabe-info"></p>
+      <p><strong>So schickst du deine Antworten:</strong> Lade die Datei herunter und schicke sie per E-Mail oder Messenger. Du kannst auch auf „Per E-Mail senden“ tippen oder den Antwortcode unten kopieren und als Nachricht schicken. Dein Ergebnis erfährst du danach von deinem Lehrer.</p>
+      <button type="button" id="datei">Antwortdatei herunterladen</button><button type="button" class="secondary" id="kopieren">Antwortcode kopieren</button><button type="button" class="secondary" id="mail">Per E-Mail senden</button>
+      <span id="kopier-info" class="ok-text"></span>
+      <p id="geaendert" class="bestaetigung versteckt">Du hast nach der Abgabe noch etwas geändert. Klicke bitte noch einmal auf „Test abgeben“ und schicke danach die neue Datei bzw. den neuen Code.</p>
+      <label style="margin-top:1rem">Antwortcode <textarea id="code-feld" readonly></textarea></label>
+    </section>
+
+    <section id="resultat" class="resultat versteckt" aria-live="polite" tabindex="-1"></section>
+
+    <details class="lehrer" id="lehrer">
+      <summary>Korrekturbereich (nur für die Lehrkraft)</summary>
+      <p>1. Antwortdatei laden <em>oder</em> den Antwortcode einfügen. 2. Korrekturcode eingeben. 3. Auswerten.</p>
+      <label>Antwortdatei (.txt) <input type="file" id="lehrer-datei" accept=".txt,text/plain"></label>
+      <label style="margin-top:.75rem">… oder Antwortcode einfügen <textarea id="lehrer-code" placeholder="CHEMWDH2.…"></textarea></label>
+      <button type="button" class="secondary" id="laden">Antworten laden</button>
+      <p id="lade-info" class="ok-text"></p>
+      <label for="pin" style="margin-top:.75rem">Korrekturcode</label>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="off">
+      <br><button type="button" id="auswerten">Mit Code auswerten</button>
+      <button type="button" class="secondary versteckt" id="bericht">Auswertung als Text herunterladen</button>
+      <p id="lehrer-fehler" class="fehlertext" role="alert"></p>
+    </details>
+  </main>
+
+  <script>
+    /* Lösungen sind mit dem Korrekturcode verschlüsselt (PBKDF2 + AES-GCM). */
+    document.getElementById('js-warnung').style.display = 'none';
+    const VERSCHLUESSELT = {"salt":"VEf6NrAIqAWyOt7wvYFcAQ==","iv":"dXKv+eIh3/4ErNEJ","iter":250000,"data":"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"};
+    const DAUER_MIN = 45, GESAMT = 30, SPEICHER = 'chemie-wdh2-s9-39', PREFIX = 'CHEMWDH2';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('test');
+    let zustand = { start: null, ende: null, abgegeben: false, code: '' };
+    let uhrTimer = null, geladen = null, letzteAuswertung = null;
+
+    function speichern() { try { localStorage.setItem(SPEICHER, JSON.stringify(Object.assign({}, zustand, { antworten: antwortenSammeln(), name: $('name').value, datum: $('datum').value }))); } catch (e) {} }
+    function antwortenSammeln() {
+      const a = {};
+      form.querySelectorAll('input[name], select[name], textarea[name]').forEach((el) => {
+        if (el.type === 'radio') { if (el.checked) a[el.name] = el.value; else if (!(el.name in a)) a[el.name] = ''; }
+        else a[el.name] = el.value.trim();
+      });
+      return a;
+    }
+    function antwortenEintragen(a) {
+      form.querySelectorAll('input[name], select[name], textarea[name]').forEach((el) => {
+        const w = (a[el.name] === undefined || a[el.name] === null) ? '' : a[el.name];
+        if (el.type === 'radio') el.checked = el.value === w; else el.value = w;
+      });
+    }
+    function dauerText(ms) { const s = Math.max(0, Math.round(ms / 1000)); return `${Math.floor(s / 60)} Min. ${s % 60} Sek.`; }
+    function mmss(ms) { const s = Math.max(0, Math.round(ms / 1000)); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
+
+    function uhrStarten() {
+      $('uhr').classList.add('sichtbar');
+      clearInterval(uhrTimer);
+      const tick = () => {
+        const rest = zustand.start + DAUER_MIN * 60000 - Date.now();
+        if (rest > 0) { $('uhr-text').textContent = `Verbleibende Zeit: ${mmss(rest)}`; $('uhr').classList.remove('abgelaufen'); }
+        else { $('uhr-text').textContent = 'Die Zeit ist abgelaufen – bitte jetzt abgeben!'; $('uhr').classList.add('abgelaufen'); }
+      };
+      tick(); uhrTimer = setInterval(tick, 1000);
+    }
+
+    function testStarten() {
+      if (!zustand.start) zustand.start = Date.now();
+      $('start-box').classList.add('versteckt'); form.classList.remove('versteckt');
+      uhrStarten(); speichern();
+    }
+    $('start').addEventListener('click', testStarten);
+    function aenderung() { speichern(); if (zustand.abgegeben && !geladen) $('geaendert').classList.remove('versteckt'); }
+    form.addEventListener('input', aenderung); form.addEventListener('change', aenderung);
+    $('name').addEventListener('input', speichern); $('datum').addEventListener('input', speichern);
+
+    /* ---------- Antwortcode ---------- */
+    function b64encode(text) { const bytes = new TextEncoder().encode(text); let s = ''; bytes.forEach((b) => { s += String.fromCharCode(b); }); return btoa(s); }
+    function b64decode(b64) { const s = atob(b64); return new TextDecoder().decode(Uint8Array.from(s, (c) => c.charCodeAt(0))); }
+    function pruefsumme(text) { let h = 0x811c9dc5; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8, '0'); }
+    function codeErzeugen(daten) { const json = JSON.stringify(daten); return `${PREFIX}.${b64encode(json)}.${pruefsumme(json)}`; }
+    function codeLesen(text) {
+      const kompakt = String(text).replace(/\s+/g, '');
+      const m = kompakt.match(new RegExp(PREFIX + '\\.([A-Za-z0-9+/=]+)\\.([0-9a-f]{8})'));
+      if (!m) throw new Error('Kein gültiger Antwortcode gefunden.');
+      const json = b64decode(m[1]);
+      if (pruefsumme(json) !== m[2]) throw new Error('Der Antwortcode ist unvollständig oder wurde verändert.');
+      return JSON.parse(json);
+    }
+
+    function abgabeAnzeigen() {
+      const d = codeLesen(zustand.code);
+      $('abgabe-info').textContent = `Abgegeben am ${new Date(d.ende).toLocaleString('de-DE')} · Bearbeitungszeit: ${dauerText(d.ende - d.start)}`;
+      $('code-feld').value = zustand.code;
+      $('abgabe').classList.remove('versteckt');
+      form.classList.remove('versteckt'); $('start-box').classList.add('versteckt');
+      clearInterval(uhrTimer); $('uhr').classList.remove('sichtbar');
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const a = antwortenSammeln();
+      const leer = Object.values(a).filter((w) => w === '').length;
+      $('abgabe-frage-text').textContent = leer > 0 ? `${leer === 1 ? 'Ein Antwortfeld ist' : `${leer} Antwortfelder sind`} noch leer. Trotzdem abgeben?` : 'Test jetzt abgeben?';
+      $('neu-frage').classList.add('versteckt'); $('abgabe-frage').classList.remove('versteckt');
+      $('abgabe-frage').scrollIntoView({ block: 'center' });
+    });
+    $('abgabe-nein').addEventListener('click', () => { $('abgabe-frage').classList.add('versteckt'); });
+    $('abgabe-ja').addEventListener('click', () => {
+      $('abgabe-frage').classList.add('versteckt');
+      const a = antwortenSammeln();
+      zustand.ende = Date.now(); zustand.abgegeben = true;
+      zustand.code = codeErzeugen({ v: 1, name: $('name').value.trim(), datum: $('datum').value.trim(), start: zustand.start, ende: zustand.ende, antworten: a });
+      speichern(); abgabeAnzeigen(); $('geaendert').classList.add('versteckt'); $('abgabe').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    $('neu').addEventListener('click', () => {
+      $('abgabe-frage').classList.add('versteckt'); $('neu-frage').classList.remove('versteckt');
+    });
+    $('neu-nein').addEventListener('click', () => { $('neu-frage').classList.add('versteckt'); });
+    $('neu-ja').addEventListener('click', () => {
+      try { localStorage.removeItem(SPEICHER); } catch (e) {}
+      location.reload();
+    });
+
+    function dateiName(name) { const n = (name || 'antworten').normalize('NFD').replace(/[^\w-]+/g, '_').replace(/_+/g, '_'); return `chemie-wdh2-s9-39-${n}.txt`; }
+    function herunterladen(inhalt, name) {
+      const blob = new Blob([inhalt], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = name;
+      document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(link.href), 2000);
+    }
+    $('datei').addEventListener('click', () => {
+      const d = codeLesen(zustand.code);
+      const text = `Chemie – Wiederholungstest 2 S. 9–39: Antworten\n\nName: ${d.name || 'nicht angegeben'}\nDatum: ${d.datum || 'nicht angegeben'}\nAbgegeben: ${new Date(d.ende).toLocaleString('de-DE')}\n\nDiese Datei bitte unverändert zurückschicken.\n\nANTWORTCODE:\n${zustand.code}\n`;
+      herunterladen(text, dateiName(d.name));
+    });
+    $('kopieren').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(zustand.code); $('kopier-info').textContent = 'Kopiert!'; }
+      catch (e) { const f = $('code-feld'); f.focus(); f.setSelectionRange(0, f.value.length); let ok = false; try { ok = document.execCommand('copy'); } catch (e2) {} $('kopier-info').textContent = ok ? 'Kopiert!' : 'Code ist markiert – bitte selbst kopieren.'; }
+      setTimeout(() => { $('kopier-info').textContent = ''; }, 2500);
+    });
+
+    $('mail').addEventListener('click', () => {
+      const d = codeLesen(zustand.code);
+      const betreff = `Chemie-Wiederholungstest 2 S. 9–39 – ${d.name || 'Antworten'}`;
+      const text = `Hier sind meine Antworten zum Chemie-Wiederholungstest 2 S. 9–39.\n\nANTWORTCODE:\n${zustand.code}\n`;
+      window.location.href = `mailto:?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(text)}`;
+    });
+
+    /* ---------- Korrektur (Lehrkraft) ---------- */
+    $('lehrer-datei').addEventListener('change', async (e) => { const f = e.target.files[0]; if (f) $('lehrer-code').value = await f.text(); });
+    $('laden').addEventListener('click', () => antwortenLaden());
+    function antwortenLaden() {
+      $('lehrer-fehler').textContent = ''; $('lade-info').textContent = '';
+      try {
+        const d = codeLesen($('lehrer-code').value);
+        geladen = d;
+        $('start-box').classList.add('versteckt'); $('abgabe').classList.add('versteckt'); $('resultat').classList.add('versteckt');
+        clearInterval(uhrTimer); $('uhr').classList.remove('sichtbar');
+        form.classList.remove('versteckt');
+        antwortenEintragen(d.antworten); $('name').value = d.name; $('datum').value = d.datum;
+        markierungenEntfernen();
+        const dauer = d.ende - d.start;
+        $('lade-info').textContent = `Geladen: ${d.name || 'ohne Namen'} · Bearbeitungszeit: ${dauerText(dauer)}${dauer > DAUER_MIN * 60000 ? ' (Zeit überschritten!)' : ''}`;
+        return true;
+      } catch (err) { $('lehrer-fehler').textContent = err.message; return false; }
+    }
+    function markierungenEntfernen() {
+      form.querySelectorAll('fieldset').forEach((f) => { f.classList.remove('richtig', 'falsch', 'teilweise'); f.querySelectorAll('.korrektur, .bewertung').forEach((x) => x.remove()); });
+      form.querySelectorAll('.feld-richtig, .feld-falsch, .gewaehlt-falsch').forEach((x) => x.classList.remove('feld-richtig', 'feld-falsch', 'gewaehlt-falsch'));
+    }
+
+    const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+    async function entschluesseln(pin) {
+      if (!window.crypto || !crypto.subtle) throw new Error('Dieser Browser unterstützt die Entschlüsselung nicht. Bitte die Datei in Chrome, Edge oder Firefox öffnen.');
+      const basis = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveKey']);
+      const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: unb64(VERSCHLUESSELT.salt), iterations: VERSCHLUESSELT.iter, hash: 'SHA-256' }, basis, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      try {
+        const klar = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(VERSCHLUESSELT.iv) }, key, unb64(VERSCHLUESSELT.data));
+        return JSON.parse(new TextDecoder().decode(klar));
+      } catch (e) { throw new Error('Der Korrekturcode ist nicht richtig.'); }
+    }
+
+    function norm(w) { return String(w).toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9]/g, ''); }
+    function zahlLesen(w) {
+      let s = String(w).split('=').pop().toLowerCase().replace(/\s+/g, '').replace(/[−–]/g, '-').replace(/[×x·•]/g, '*').replace(/,/g, '.');
+      s = s.replace(/(dm³|dm3|g\/mol|liter|kg|mol|teilchen|gramm|volt|coulomb|l|g|v|c)$/, '');
+      let m = s.match(/^([0-9]*\.?[0-9]+)\*?10\^\(?([+-]?\d+)\)?$/); if (m) return parseFloat(m[1]) * Math.pow(10, parseInt(m[2], 10));
+      m = s.match(/^10\^\(?([+-]?\d+)\)?$/); if (m) return Math.pow(10, parseInt(m[1], 10));
+      m = s.match(/^([0-9]*\.?[0-9]+)e([+-]?\d+)$/); if (m) return parseFloat(s);
+      if (/^-?[0-9]*\.?[0-9]+$/.test(s)) return parseFloat(s);
+      m = s.match(/^(-?[0-9]*\.?[0-9]+)([a-zäöüß⁺⁻+\-]*)$/); if (m) return parseFloat(m[1]);
+      return NaN;
+    }
+    function istRichtig(regel, wert) {
+      if (wert === undefined || wert === null || String(wert).trim() === '') return false;
+      switch (regel.t) {
+        case 'wahl': return wert === regel.v;
+        case 'text': return regel.v.includes(norm(wert));
+        case 'ziffern': return String(wert).replace(/\D/g, '') === regel.v;
+        case 'roem': return String(wert).toUpperCase().replace(/[^IVXLCDM]/g, '') === regel.v && !/[^IVXLCDM\s.]/i.test(String(wert).trim());
+        case 'zahl': { const z = zahlLesen(wert); if (Number.isNaN(z)) return false; const tol = (typeof regel.tol === 'number') ? regel.tol : 1e-9; return Math.abs(z - regel.v) <= Math.abs(regel.v) * tol + 1e-300; }
+        case 'potenz': { if (!/10\s*\^/.test(String(wert))) return false; const z = zahlLesen(wert); return !Number.isNaN(z) && Math.abs(z - regel.v) <= Math.abs(regel.v) * 1e-9; }
+        default: return false;
+      }
+    }
+    function note(p) { return p >= 92 ? '1 (sehr gut)' : p >= 81 ? '2 (gut)' : p >= 67 ? '3 (befriedigend)' : p >= 50 ? '4 (ausreichend)' : p >= 30 ? '5 (mangelhaft)' : '6 (ungenügend)'; }
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    $('auswerten').addEventListener('click', async () => {
+      $('lehrer-fehler').textContent = '';
+      if (!geladen) { if ($('lehrer-code').value.trim()) { if (!antwortenLaden()) return; } else if (zustand.abgegeben) { geladen = codeLesen(zustand.code); } else { $('lehrer-fehler').textContent = 'Bitte zuerst die Antwortdatei laden oder den Antwortcode einfügen.'; return; } }
+      let loes;
+      try { $('auswerten').disabled = true; loes = await entschluesseln($('pin').value.trim()); }
+      catch (err) { $('lehrer-fehler').textContent = err.message; $('pin').focus(); return; }
+      finally { $('auswerten').disabled = false; }
+      auswerten(loes, geladen);
+    });
+
+    function auswerten(loes, d) {
+      antwortenEintragen(d.antworten); markierungenEntfernen();
+      let punkte = 0; const aufgaben = []; const bereiche = {};
+      form.querySelectorAll('fieldset[data-id]').forEach((fs) => {
+        const id = fs.dataset.id; const info = loes.aufgaben[id];
+        let p = 0, max = 0; let falsch = 0; const details = [];
+        info.felder.forEach((name) => {
+          const regel = loes.regeln[name]; const wert = (d.antworten[name] === undefined || d.antworten[name] === null) ? '' : d.antworten[name]; const ok = istRichtig(regel, wert);
+          max += 1; if (ok) p += 1; else if (String(wert).trim() !== '') falsch += 1;
+          const els = fs.querySelectorAll(`[name="${name}"]`);
+          if (els[0] && els[0].type === 'radio') { const gew = fs.querySelector(`[name="${name}"][value="${wert}"]`); if (gew && !ok) gew.closest('label').classList.add('gewaehlt-falsch'); }
+          else if (els[0]) els[0].classList.add(ok ? 'feld-richtig' : 'feld-falsch');
+          let anzeige = wert;
+          if (els[0] && els[0].type === 'radio') { const gew = fs.querySelector(`[name="${name}"][value="${wert}"]`); anzeige = gew ? `${wert}) ${gew.closest('label').textContent.trim()}` : ''; }
+          if (els[0] && els[0].tagName === 'SELECT') { const opt = Array.prototype.slice.call(els[0].options).find((o) => o.value === wert); anzeige = opt && wert ? opt.textContent : ''; }
+          details.push({ ok, antwort: anzeige || 'nicht beantwortet' });
+        });
+        if (info.modus === 'abzug') p = Math.max(0, p - falsch);
+        punkte += p;
+        fs.classList.add(p === max ? 'richtig' : p === 0 ? 'falsch' : 'teilweise');
+        const bew = document.createElement('p'); bew.className = 'bewertung'; bew.textContent = `${p} / ${max} Punkt${max > 1 ? 'e' : ''}`; fs.append(bew);
+        const k = document.createElement('p'); k.className = 'korrektur sichtbar'; k.innerHTML = info.loesung; fs.append(k);
+        const b = info.bereich; bereiche[b] = bereiche[b] || { p: 0, max: 0 }; bereiche[b].p += p; bereiche[b].max += max;
+        aufgaben.push({ frage: fs.querySelector('legend').textContent.replace(/\s+/g, ' ').trim(), p, max, details, loesung: k.textContent });
+      });
+      const prozent = Math.round(punkte / GESAMT * 100);
+      const dauer = d.ende - d.start;
+      letzteAuswertung = { d, punkte, prozent, aufgaben, bereiche, dauer };
+      const zeilen = Object.entries(bereiche).map(([b, v]) => `<tr><td>${esc(b)}</td><td>${v.p} / ${v.max}</td><td>${Math.round(v.p / v.max * 100)} %</td></tr>`).join('');
+      $('resultat').innerHTML = `<h2 style="margin-top:0">Auswertung</h2>
+        <p><strong>${esc(d.name || 'Ohne Namen')}</strong> · ${esc(d.datum || 'ohne Datum')} · Bearbeitungszeit: ${dauerText(dauer)}${dauer > DAUER_MIN * 60000 ? ' <strong style="color:var(--fehler)">(45 Minuten überschritten)</strong>' : ''}</p>
+        <p class="note"><strong>${punkte} von ${GESAMT} Punkten (${prozent} %) – Note ${note(prozent)}</strong></p>
+        <table class="auswertung"><thead><tr><th>Bereich</th><th>Punkte</th><th>Anteil</th></tr></thead><tbody>${zeilen}</tbody></table>
+        <p style="font-size:.9rem">Notenschlüssel (IHK): ab 92 % = 1 · ab 81 % = 2 · ab 67 % = 3 · ab 50 % = 4 · ab 30 % = 5 · darunter 6. Grün = richtig, Orange = teilweise richtig, Rot = falsch. Die Lösungen stehen unter jeder Aufgabe.</p>`;
+      form.querySelectorAll('fieldset.frei').forEach((fs) => { const id = fs.dataset.frei; fs.querySelectorAll('.korrektur').forEach((x) => x.remove()); const k = document.createElement('p'); k.className = 'korrektur sichtbar'; k.innerHTML = '<strong>Erwartung (' + id + '):</strong> ' + (loes.frei[id] || ''); fs.append(k); });
+      $('resultat').insertAdjacentHTML('beforeend', '<p><strong>Teil C (10 Punkte)</strong> wird von Claude als IHK-Prüfer bewertet: Schick den Antwortcode an Onkel Manu.</p>');
+      letzteAuswertung.frei = Array.prototype.map.call(form.querySelectorAll('fieldset.frei'), (fs) => `Teil C ${fs.dataset.frei}): ${(d.antworten['c' + fs.dataset.frei] || 'nicht beantwortet')}`).join('\n');
+      $('resultat').classList.remove('versteckt'); $('bericht').classList.remove('versteckt');
+      $('resultat').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    $('bericht').addEventListener('click', () => {
+      const a = letzteAuswertung; if (!a) return;
+      const fehler = a.aufgaben.filter((x) => x.p < x.max);
+      const teile = fehler.map((x) => `Aufgabe: ${x.frage} (${x.p}/${x.max})\nAntwort(en):\n${x.details.map((y) => `- ${y.antwort}${y.ok ? ' (richtig)' : ' (falsch)'}`).join('\n')}\nRichtige Lösung: ${x.loesung}`).join('\n\n');
+      const bereiche = Object.entries(a.bereiche).map(([b, v]) => `- ${b}: ${v.p}/${v.max}`).join('\n');
+      const text = `Chemie – Wiederholungstest 2 S. 9–39: Auswertung\n\nName: ${a.d.name || 'nicht angegeben'}\nDatum: ${a.d.datum || 'nicht angegeben'}\nBearbeitungszeit: ${dauerText(a.dauer)}\nErgebnis: ${a.punkte} von ${GESAMT} Punkten (${a.prozent} %) – Note ${note(a.prozent)}\n\nNach Bereichen:\n${bereiche}\n\nNicht vollständig gelöste Aufgaben:\n${teile || 'Keine – alles richtig!'}\n\nTeil C (freie Antworten, wird separat bewertet):\n${a.frei || ''}\n`;
+      herunterladen(text, dateiName(a.d.name).replace('.txt', '-auswertung.txt'));
+    });
+
+    /* ---------- Wiederherstellen ---------- */
+    (function init() {
+      let s = null; try { s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); } catch (e) {}
+      if (!s) return;
+      zustand = { start: s.start, ende: s.ende, abgegeben: s.abgegeben, code: s.code || '' };
+      $('name').value = s.name || ''; $('datum').value = s.datum || '';
+      if (s.antworten) antwortenEintragen(s.antworten);
+      if (zustand.abgegeben && zustand.code) { try { abgabeAnzeigen(); } catch (e) {} }
+      else if (zustand.start) testStarten();
+    })();
+  </script>
+</body>
+</html>

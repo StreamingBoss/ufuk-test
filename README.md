@@ -1,1 +1,1 @@
-# ufuk-test
+Practice tests (static pages).
