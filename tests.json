@@ -2,10 +2,6 @@
  "token": "nzwldugmqkn3",
  "tests": [
   {
-   "file": "ufuk-lernplan.html",
-   "title": "Dein Lernplan bis zur Prüfung"
-  },
-  {
    "file": "pilot-w1/index.html",
    "title": "Lernwoche 1 (2.–8. November): deine Aufgaben und Videos"
   }
