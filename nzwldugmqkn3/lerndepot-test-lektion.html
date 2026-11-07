@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Testlektion</title>
+<style>body{font:18px/1.5 system-ui,-apple-system,sans-serif;background:#e2e8f0;margin:0;color:#17212b}
+main{max-width:30rem;margin:3rem auto;background:#fff;padding:1.5rem;border-radius:.5rem}
+input{font:inherit;width:100%;padding:.6rem;border:1px solid #64748b;border-radius:.3rem;margin:.5rem 0}
+button{font:inherit;font-weight:600;padding:.7rem 1.2rem;border:0;border-radius:.3rem;background:#075985;color:#fff}
+#fehler{color:#b91c1c;font-weight:600}</style></head>
+<body><main><h1>Testlektion</h1>
+<p>Diese Seite ist geschützt. Gib den Zugangscode ein, den du von Manu bekommen hast.</p>
+<form id="f"><label for="c">Zugangscode</label><input id="c" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+<button type="submit">Öffnen</button></form><p id="fehler"></p></main>
+<script>
+const BLOB = {"salt":"NzSht3U4Cr12GLhO2nMMjg==","iv":"XmEuok2S7gD4qY2+","iter":250000,"data":"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"};
+const ub = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+// Single unlock: after one successful unlock the code stays in this tab's sessionStorage only (cleared when the tab closes),
+// so further encrypted pages of this site open without asking again. Other tabs, devices and later visits ask again.
+// Admin session (Manu only, separate admin code): once the admin code has been used in this tab, every page opened in the tab runs
+// with an "admin prelude" injected before any page code: storage is temporary, nothing is sent or downloaded, a banner says so.
+const SESSION_KEY = 'ufuk-unlock-v1', ADMIN_FLAG = 'ufuk-admin-v1', ADMIN_CODE = 'ufuk-admin-code-v1';
+const ADMIN_ONLY = BLOB.admin === true;
+const fehler = document.getElementById('fehler');
+const ss = (function () { try { return window.sessionStorage; } catch (_) { return null; } })();
+const sget = (k) => { try { return ss ? ss.getItem(k) : null; } catch (_) { return null; } };
+const sset = (k, v) => { try { if (ss) ss.setItem(k, v); } catch (_) { /* blocked: the form asks again on the next page */ } };
+const sdel = (k) => { try { if (ss) ss.removeItem(k); } catch (_) { /* ignore */ } };
+function adminPrelude() {
+  var real = window.__UFUK_REAL_SESSION__; delete window.__UFUK_REAL_SESSION__;
+  var mem = function () { var d = {}; return { getItem: function (k) { return Object.prototype.hasOwnProperty.call(d, k) ? d[k] : null; }, setItem: function (k, v) { d[k] = String(v); },
+    removeItem: function (k) { delete d[k]; }, clear: function () { d = {}; }, key: function (i) { return Object.keys(d)[i] || null; }, get length() { return Object.keys(d).length; } }; };
+  try { Object.defineProperty(window, 'localStorage', { value: mem(), configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(window, 'sessionStorage', { value: mem(), configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(document, 'cookie', { get: function () { return ''; }, set: function () { /* ignored */ }, configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(window, 'indexedDB', { value: undefined, configurable: true }); } catch (e) { /* ignore */ }
+  var bar = null, timer = null;
+  function blocked() { if (!bar) return; bar.firstChild.textContent = 'Blocked in admin view: nothing is sent or downloaded.'; clearTimeout(timer);
+    timer = setTimeout(function () { bar.firstChild.textContent = 'Admin view: nothing is saved or sent.'; }, 3500); }
+  var nf = window.fetch;
+  window.fetch = function (u, o) { var m = String((o && o.method) || (u && u.method) || 'GET').toUpperCase();
+    if (m !== 'GET' && m !== 'HEAD') { blocked(); return Promise.reject(new TypeError('Admin view: sending is blocked')); } return nf.apply(this, arguments); };
+  var xo = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (m) { var u = String(m).toUpperCase();
+    if (u !== 'GET' && u !== 'HEAD') { blocked(); throw new Error('Admin view: sending is blocked'); } return xo.apply(this, arguments); };
+  navigator.sendBeacon = function () { blocked(); return false; };
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest && e.target.closest('a[download]'); if (a) { e.preventDefault(); e.stopPropagation(); blocked(); } }, true);
+  document.addEventListener('submit', function (e) { if (String(e.target && e.target.method).toLowerCase() === 'post') { e.preventDefault(); blocked(); } }, true);
+  window.__UFUK_ADMIN__ = true;
+  window.__ufukAdminExit = function () { try { real.removeItem('ufuk-admin-v1'); real.removeItem('ufuk-admin-code-v1'); } catch (e) { /* ignore */ } location.reload(); };
+  window.__ufukAdminRealSession = real;
+  document.addEventListener('DOMContentLoaded', function () {
+    var st = document.createElement('style'); st.textContent = 'html{padding-top:38px}#ufuk-admin-bar{position:fixed;top:0;left:0;right:0;height:38px;z-index:2147483647;background:#7a3b00;color:#fff;font:600 14px/38px system-ui,sans-serif;display:flex;gap:12px;justify-content:center;align-items:center;padding:0 10px}#ufuk-admin-bar button{font:inherit;line-height:1;border:1px solid #fff;background:transparent;color:#fff;border-radius:6px;padding:0 10px;height:26px;cursor:pointer;display:inline-flex;align-items:center}';
+    document.head.appendChild(st); bar = document.createElement('div'); bar.id = 'ufuk-admin-bar'; bar.setAttribute('role', 'status');
+    var t = document.createElement('span'); t.textContent = 'Admin view: nothing is saved or sent.'; bar.appendChild(t);
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = 'Leave admin'; b.addEventListener('click', function () { window.__ufukAdminExit(); }); bar.appendChild(b);
+    document.body.insertBefore(bar, document.body.firstChild);
+  });
+}
+function withPrelude(html) {
+  var tag = '<' + 'script>(' + adminPrelude.toString() + ')();<' + '/script>';
+  var m = html.match(/<head[^>]*>/i);
+  return m ? html.slice(0, m.index + m[0].length) + tag + html.slice(m.index + m[0].length) : tag + html;
+}
+async function decryptWith(code) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: ub(BLOB.salt), iterations: BLOB.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub(BLOB.iv) }, key, ub(BLOB.data)));
+}
+function show(html, code) {
+  if (ADMIN_ONLY) { sset(ADMIN_FLAG, '1'); sset(ADMIN_CODE, code); } else sset(SESSION_KEY, code);
+  // Runtime handoff only; never embedded in the published ciphertext wrapper.
+  if (html.includes('const SYNC_CONFIG =') && !ADMIN_ONLY) window.__UFUK_UNLOCK_CODE__ = code;
+  if (sget(ADMIN_FLAG) === '1') { window.__UFUK_REAL_SESSION__ = ss; html = withPrelude(html); }
+  document.open(); document.write(html); document.close();
+}
+if (ADMIN_ONLY) { const p = document.querySelector('main p'); if (p) p.textContent = 'This page is for admins only. Enter the admin code.'; document.querySelector('label').textContent = 'Admin code'; }
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  fehler.textContent = 'Einen Moment …';
+  try {
+    const code = document.getElementById('c').value.trim();
+    show(await decryptWith(code), code);
+  } catch (err) { fehler.textContent = 'Der Zugangscode ist nicht richtig. Bitte noch einmal versuchen.'; }
+});
+(async () => {
+  const key = ADMIN_ONLY ? ADMIN_CODE : SESSION_KEY, saved = sget(key);
+  if (!saved) return;
+  fehler.textContent = 'Einen Moment …';
+  try { show(await decryptWith(saved), saved); }
+  catch (err) { if (!ADMIN_ONLY) sdel(SESSION_KEY); fehler.textContent = ''; }
+})();
+</script></body></html>
