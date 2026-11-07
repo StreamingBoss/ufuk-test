@@ -6,13 +6,20 @@
 main{max-width:30rem;margin:3rem auto;background:#fff;padding:1.5rem;border-radius:.5rem}
 input{font:inherit;width:100%;padding:.6rem;border:1px solid #64748b;border-radius:.3rem;margin:.5rem 0}
 button{font:inherit;font-weight:600;padding:.7rem 1.2rem;border:0;border-radius:.3rem;background:#075985;color:#fff}
-#fehler{color:#b91c1c;font-weight:600}</style></head>
-<body><main><h1>Unreleased test lesson</h1>
+#fehler{color:#b91c1c;font-weight:600}
+/* A remembered code is being used: show no form, only a quiet wait state, so moving between pages never flashes the code screen. */
+#wait{display:none;font-size:15px;color:#64748b;text-align:center;margin-top:30vh}
+#wait i{display:block;width:26px;height:26px;margin:0 auto 12px;border:3px solid #cbd5e1;border-top-color:#64748b;border-radius:50%;animation:spin .8s linear infinite}
+html.auto main{display:none}html.auto #wait{display:block}html.auto body{background:#f1f5f9}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#wait i{animation:none}}</style>
+<script>try{if(sessionStorage.getItem('ufuk-admin-code-v1'))document.documentElement.className='auto'}catch(e){}</script></head>
+<body><div id="wait" role="status"><i></i>Einen Moment …</div><main><h1>Unreleased test lesson</h1>
 <p>Diese Seite ist geschützt. Gib den Zugangscode ein, den du von Manu bekommen hast.</p>
 <form id="f"><label for="c">Zugangscode</label><input id="c" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
 <button type="submit">Öffnen</button></form><p id="fehler"></p></main>
 <script>
-const BLOB = {"salt":"Ce3DcL2XljivKvdCdWKaaA==","iv":"LKh6EU6bcsvQ7GPM","iter":250000,"data":"4xzXSfT1Lv0ZHIpHWgzyl6NUriz0RvRzg7eBfh1k6h7c5SKnuf+e/WwG81vhFRAYFs2dz23GqWbPgXRhlyjpiW7KbWHFbgP1lSymJcPKrJsr+wTFuaJAiU+1o4H6/e8Veh9XVx7uc5tR0ODBDgj56UPM0Rr/wjX+x3q2sBe712dyIJBwRya3jnLGVOjfD22rzhOBgmMLmWawuTppjggd1XM3jo8YAipl5k4gQ9AQge9CDeDWxC/DL8tg7Wgpa2P9+6AtaGOoJ6V5v9K8kwlBjAc7gOrgGrWgjs+c7iWBsmUJe2eolgM8KAU96ZKii1IIXQzAv1hxBjyJmzXGQmnWRyFOpleqW3V6ajSt2q+JNK1C7VlGIzf0x05fdBi19HOhgPd3G+kl7W9JHxjN3mQwboTgz52VpeB9GDVjXcnZlqxb7RqDhTyJLxAHD9ry31pC70j+dnWZggFeQ+ThaBbtdWAmJLuoNmC4UIHsrLlZ3aQsxprgbTV6WgBNBh5U+GfB7Kej7Q63K2kvxHpmKsDINPxAuAdDFH6JdI/ndCgv6znNakN2OnzW2USMPlmt4YeF++lP2X7zyMVq4aOWv7lgp7+ap0Ji2D07QguFFSYVq9kIsFyjA5dYoAsZH6BiwpwWL2vQOZXJbGr73ZAOt9/Ufpq8rwWZxK1VyAUjCvfu5D1W0Tl6C/Hc9pBAFuf9AT4=","admin":true};
+const BLOB = {"salt":"OWPOqv7X9d8Of2tv/dIv/A==","iv":"L7n2zKa5DcGT+4mg","iter":250000,"data":"WG6CHkxPQdE9iv+7dJhz4HVwS0c7hWqpzC/wDsZnlzlWZtA4CqCd6leiqDkKlk1jHTCsDRFLIIEiPSizWFlDhTntXNKCsE7sfks1NeGLAT+wo5+XX7HloavyGy53qppAVwcdIVUoC6+xSEPpOu9EZowwMx7bj1nl110pOufx5/4pE5N0RocB0sv8HIx45NPT2Sk8iu7Xu1ScdRtMuTyA1JiP6VC8rn6H/Akm0/2YTUEO7/4/Id/RBo8UbAMd35fIeflizitBJpKh4K8DtfTDMxY+LsYDjcDBy9kedPms4Z+lMRC3dhWio9aqifJOONvPjuzSy5TbZZUFklV+Gj6yX+FTYVz2mOVoXX9hBS55dmf7j7OAixvDazbzI8XLge7Y8KgM6Xop9wHAkKit3qm8sPg6oF22xKcHdhULMH5D12HHUt7K4eEft//7XzUVznNAEaWctslBFOjnB50bSEytIfq5ILb51ejY9aTRTbbLy9D9/7n2lk6C9kB8QI2I4mfJDqIWFCd/x1xwEwM9ecj+adYYM7U7S2QaYOT9D1k7yTuQ+WQmsdbtTCRfiOGFjDjuFYFHJ7oTgiUZkzSGol4RIGryzQYqBThhkfdftFGgj53HRNBOByq+xIX26LU4U3f5VwHdpw2QNKUaxqSJuDTW3poDUoE5WQDDWAgbXVvMK7oYZFzMEhw8FaJKK5QgedM=","admin":true};
 const ub = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
 // Single unlock: after one successful unlock the code stays in this tab's sessionStorage only (cleared when the tab closes),
 // so further encrypted pages of this site open without asking again. Other tabs, devices and later visits ask again.
@@ -87,6 +94,6 @@ document.getElementById('f').addEventListener('submit', async (e) => {
   if (!saved) return;
   fehler.textContent = 'Einen Moment …';
   try { show(await decryptWith(saved), saved); }
-  catch (err) { if (!ADMIN_ONLY) sdel(SESSION_KEY); fehler.textContent = ''; }
+  catch (err) { if (!ADMIN_ONLY) sdel(SESSION_KEY); fehler.textContent = ''; document.documentElement.className = ''; }   // the remembered code failed: now the form may show
 })();
 </script></body></html>
