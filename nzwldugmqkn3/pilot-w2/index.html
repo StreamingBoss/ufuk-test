@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Deine Woche</title>
+<style>body{font:18px/1.5 system-ui,-apple-system,sans-serif;background:#e2e8f0;margin:0;color:#17212b}
+main{max-width:30rem;margin:3rem auto;background:#fff;padding:1.5rem;border-radius:.5rem}
+input{font:inherit;width:100%;padding:.6rem;border:1px solid #64748b;border-radius:.3rem;margin:.5rem 0}
+button{font:inherit;font-weight:600;padding:.7rem 1.2rem;border:0;border-radius:.3rem;background:#075985;color:#fff}
+#fehler{color:#b91c1c;font-weight:600}
+/* A remembered code is being used: show no form, only a quiet wait state, so moving between pages never flashes the code screen. */
+#wait{display:none;font-size:15px;color:#64748b;text-align:center;margin-top:30vh}
+#wait i{display:block;width:26px;height:26px;margin:0 auto 12px;border:3px solid #cbd5e1;border-top-color:#64748b;border-radius:50%;animation:spin .8s linear infinite}
+html.auto main{display:none}html.auto #wait{display:block}html.auto body{background:#f1f5f9}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#wait i{animation:none}}</style>
+<script>try{if(sessionStorage.getItem('ufuk-unlock-v1'))document.documentElement.className='auto'}catch(e){}</script></head>
+<body><div id="wait" role="status"><i></i>Einen Moment …</div><main><h1>Deine Woche</h1>
+<p>Diese Seite ist geschützt. Gib den Zugangscode ein, den du von Manu bekommen hast.</p>
+<form id="f"><label for="c">Zugangscode</label><input id="c" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+<button type="submit">Öffnen</button></form><p id="fehler"></p></main>
+<script>
+const BLOB = {"salt":"1/0zLs0vLzOctFVlvA5Ueg==","iv":"NvlzQHgV+dc5E5Gg","iter":250000,"data":"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"};
+const ub = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+// Single unlock: after one successful unlock the code stays in this tab's sessionStorage only (cleared when the tab closes),
+// so further encrypted pages of this site open without asking again. Other tabs, devices and later visits ask again.
+// Admin session (Manu only, separate admin code): once the admin code has been used in this tab, every page opened in the tab runs
+// with an "admin prelude" injected before any page code: storage is temporary, nothing is sent or downloaded, a banner says so.
+const SESSION_KEY = 'ufuk-unlock-v1', ADMIN_FLAG = 'ufuk-admin-v1', ADMIN_CODE = 'ufuk-admin-code-v1';
+const ADMIN_ONLY = BLOB.admin === true;
+const fehler = document.getElementById('fehler');
+const ss = (function () { try { return window.sessionStorage; } catch (_) { return null; } })();
+const sget = (k) => { try { return ss ? ss.getItem(k) : null; } catch (_) { return null; } };
+const sset = (k, v) => { try { if (ss) ss.setItem(k, v); } catch (_) { /* blocked: the form asks again on the next page */ } };
+const sdel = (k) => { try { if (ss) ss.removeItem(k); } catch (_) { /* ignore */ } };
+function adminPrelude() {
+  var real = window.__UFUK_REAL_SESSION__; delete window.__UFUK_REAL_SESSION__;
+  var mem = function () { var d = {}; return { getItem: function (k) { return Object.prototype.hasOwnProperty.call(d, k) ? d[k] : null; }, setItem: function (k, v) { d[k] = String(v); },
+    removeItem: function (k) { delete d[k]; }, clear: function () { d = {}; }, key: function (i) { return Object.keys(d)[i] || null; }, get length() { return Object.keys(d).length; } }; };
+  try { Object.defineProperty(window, 'localStorage', { value: mem(), configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(window, 'sessionStorage', { value: mem(), configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(document, 'cookie', { get: function () { return ''; }, set: function () { /* ignored */ }, configurable: true }); } catch (e) { /* ignore */ }
+  try { Object.defineProperty(window, 'indexedDB', { value: undefined, configurable: true }); } catch (e) { /* ignore */ }
+  var bar = null, timer = null;
+  function blocked() { if (!bar) return; bar.firstChild.textContent = 'Blocked in admin view: nothing is sent or downloaded.'; clearTimeout(timer);
+    timer = setTimeout(function () { bar.firstChild.textContent = 'Admin view: nothing is saved or sent.'; }, 3500); }
+  var nf = window.fetch;
+  window.fetch = function (u, o) { var m = String((o && o.method) || (u && u.method) || 'GET').toUpperCase();
+    if (m !== 'GET' && m !== 'HEAD') { blocked(); return Promise.reject(new TypeError('Admin view: sending is blocked')); } return nf.apply(this, arguments); };
+  var xo = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (m) { var u = String(m).toUpperCase();
+    if (u !== 'GET' && u !== 'HEAD') { blocked(); throw new Error('Admin view: sending is blocked'); } return xo.apply(this, arguments); };
+  navigator.sendBeacon = function () { blocked(); return false; };
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest && e.target.closest('a[download]'); if (a) { e.preventDefault(); e.stopPropagation(); blocked(); } }, true);
+  document.addEventListener('submit', function (e) { if (String(e.target && e.target.method).toLowerCase() === 'post') { e.preventDefault(); blocked(); } }, true);
+  window.__UFUK_ADMIN__ = true;
+  window.__ufukAdminExit = function () { try { real.removeItem('ufuk-admin-v1'); real.removeItem('ufuk-admin-code-v1'); if (real.getItem('ufuk-admin-front-v1')) { real.removeItem('ufuk-admin-front-v1'); real.removeItem('ufuk-unlock-v1'); } } catch (e) { /* ignore */ } location.reload(); };   // entered with the admin code at the front door: leaving returns to the code screen, never to an ordinary session
+  window.__ufukAdminRealSession = real;
+  document.addEventListener('DOMContentLoaded', function () {
+    var st = document.createElement('style'); st.textContent = 'html{padding-top:38px}#ufuk-admin-bar{position:fixed;top:0;left:0;right:0;height:38px;z-index:2147483647;background:#7a3b00;color:#fff;font:600 14px/38px system-ui,sans-serif;display:flex;gap:12px;justify-content:center;align-items:center;padding:0 10px}#ufuk-admin-bar button{font:inherit;line-height:1;border:1px solid #fff;background:transparent;color:#fff;border-radius:6px;padding:0 10px;height:26px;cursor:pointer;display:inline-flex;align-items:center}';
+    document.head.appendChild(st); bar = document.createElement('div'); bar.id = 'ufuk-admin-bar'; bar.setAttribute('role', 'status');
+    var t = document.createElement('span'); t.textContent = 'Admin view: nothing is saved or sent.'; bar.appendChild(t);
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = 'Leave admin'; b.addEventListener('click', function () { window.__ufukAdminExit(); }); bar.appendChild(b);
+    document.body.insertBefore(bar, document.body.firstChild);
+  });
+}
+function withPrelude(html) {
+  var tag = '<' + 'script>(' + adminPrelude.toString() + ')();<' + '/script>';
+  var m = html.match(/<head[^>]*>/i);
+  return m ? html.slice(0, m.index + m[0].length) + tag + html.slice(m.index + m[0].length) : tag + html;
+}
+async function decryptWith(code) {
+  if (BLOB.wraps) {   // v2: content key wrapped for the access code and for the admin code
+    for (const w of BLOB.wraps) {
+      let p;
+      try {
+        const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey']);
+        const wk = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: ub(w.salt), iterations: BLOB.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        p = JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub(w.iv) }, wk, ub(w.data))));
+      } catch (_) { continue; }   // not this wrap
+      const ck = await crypto.subtle.importKey('raw', ub(p.ck), 'AES-GCM', false, ['decrypt']);
+      const html = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub(BLOB.iv) }, ck, ub(BLOB.data)));
+      return { html, admin: w.admin === true, access: p.access || null };
+    }
+    throw new Error('wrong code');
+  }
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: ub(BLOB.salt), iterations: BLOB.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub(BLOB.iv) }, key, ub(BLOB.data)));
+}
+function show(res, code) {
+  let html = typeof res === 'string' ? res : res.html; const viaAdmin = typeof res !== 'string' && res.admin;
+  if (ADMIN_ONLY) { sset(ADMIN_FLAG, '1'); sset(ADMIN_CODE, code); }
+  else if (viaAdmin) { sset(ADMIN_FLAG, '1'); sset(ADMIN_CODE, code); sset('ufuk-admin-front-v1', '1'); if (res.access) sset(SESSION_KEY, res.access); }   // the admin code at the front door: always the read-only admin view
+  else sset(SESSION_KEY, code);
+  // Runtime handoff only; never embedded in the published ciphertext wrapper.
+  if (html.includes('const SYNC_CONFIG =') && !ADMIN_ONLY) window.__UFUK_UNLOCK_CODE__ = viaAdmin ? res.access : code;
+  if (sget(ADMIN_FLAG) === '1') { window.__UFUK_REAL_SESSION__ = ss; html = withPrelude(html); }
+  document.open(); document.write(html); document.close();
+}
+if (ADMIN_ONLY) { const p = document.querySelector('main p'); if (p) p.textContent = 'This page is for admins only. Enter the admin code.'; document.querySelector('label').textContent = 'Admin code'; }
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  fehler.textContent = 'Einen Moment …';
+  try {
+    const code = document.getElementById('c').value.trim();
+    show(await decryptWith(code), code);
+  } catch (err) { fehler.textContent = 'Der Zugangscode ist nicht richtig. Bitte noch einmal versuchen.'; }
+});
+(async () => {
+  const key = ADMIN_ONLY ? ADMIN_CODE : SESSION_KEY, saved = sget(key);
+  if (!saved) return;
+  fehler.textContent = 'Einen Moment …';
+  try { show(await decryptWith(saved), saved); }
+  catch (err) { if (!ADMIN_ONLY) sdel(SESSION_KEY); fehler.textContent = ''; document.documentElement.className = ''; }   // the remembered code failed: now the form may show
+})();
+</script></body></html>
